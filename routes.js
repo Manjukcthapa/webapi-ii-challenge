@@ -50,6 +50,9 @@ router.post("/posts", (req, res) => {
       });
   });
 
+
+
+
   router.delete("/posts/:id", (req, res) => {
     const postid = req.params.id;
     db.remove(postid)
@@ -94,6 +97,27 @@ router.post("/posts/:id/comments", (req, res) => {
         res.status(500).json({ error: "There was an error while saving the comment to the database" });
     })
 });
+
+router.get("/posts/:id/comments", (req, res) => {
+   
+    db.findCommentById(req.params.id)
+    .then(post =>{
+        if(post){
+            res.status(201).json({ post})
+        } else{
+            res.status(404).json({
+                error:err,
+                message: "The post with the specified ID does not exist." 
+
+            })
+        }
+    })
+
+    .catch(error => { 
+        res.status(500).json({ error: "The comments information could not be retrieved."});
+    })
+});
+
 
 
 router.put("/posts/:id", (req, res) => {
