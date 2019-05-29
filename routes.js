@@ -38,9 +38,7 @@ router.post("/posts", (req, res) => {
     db.findById(postid)
       .then(id => {
         if (id) {
-          db.findById(postid).then(findId => {
-            res.status(200).json(findId);
-          });
+          res.status(200).json(findId);
         } else {
           res.status(404).json({ message: " No ID found" });
         }
